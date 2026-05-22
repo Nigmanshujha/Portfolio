@@ -4,270 +4,955 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Nigmanshu Jha | CSE Portfolio</title>
-  <link rel="stylesheet" href="style.css" />
+
+  <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+
+  /* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: #0f0f0f;
+  color: #fff;
+  scroll-behavior: smooth;
+}
+
+/* Smooth scroll and offset for sticky navbar */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 70px;
+}
+
+/* Each section fills the full screen */
+section {
+  min-height: 100vh;
+  padding: 100px 2rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Navbar */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #111;
+  z-index: 1000;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar h1 {
+  color: #00ffff;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-links a {
+  color: #00ffcc;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* Hero */
+.hero {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  overflow: hidden;
+}
+
+.bg-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  min-height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  opacity: 0.3;
+}
+
+.profile-img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border: 4px solid #00ffff;
+  object-fit: cover;
+  object-position: top;
+  margin-bottom: 20px;
+  box-shadow: 0 0 20px #00ffff;
+}
+
+.hero .content {
+  z-index: 1;
+  position: relative;
+}
+
+.content h1 {
+  font-size: 3rem;
+  color: #fff;
+}
+
+.content h1 span {
+  color: #00ffff;
+}
+
+#typing {
+  font-size: 1.5rem;
+  color: #00ff7f;
+  font-weight: bold;
+}
+
+.btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background: #00ffff;
+  color: #000;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  display: inline-block;
+}
+
+section h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #00ffff;
+}
+
+.section-heading {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  color: #00ffff;
+}
+
+.about-card {
+  background: rgba(0, 255, 255, 0.05);
+  border: 1px solid #00ffff;
+  border-radius: 15px;
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+  font-size: 1.2rem;
+  line-height: 1.8;
+  box-shadow: 0 0 20px #00ffff33;
+}
+
+/* Contact Icons */
+.contact-icons {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.contact-icons div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.1rem;
+}
+
+.contact-icons img {
+  width: 24px;
+  height: 24px;
+}
+
+.contact-icons a {
+  color: #00ffff;
+  text-decoration: none;
+}
+
+/* Projects */
+#projects {
+  text-align: center;
+  background: #0a0a0a;
+}
+
+.project-filters {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.filter-btn {
+  padding: 8px 16px;
+  margin: 5px;
+  border: 2px solid #00ffff;
+  background: transparent;
+  color: #00ffff;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.filter-btn.active,
+.filter-btn:hover {
+  background-color: #00ffff;
+  color: #000;
+}
+
+.project-slider-wrapper {
+  position: relative;
+  overflow: hidden;
+  padding: 0 40px;
+}
+
+.project-slider {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding: 20px 0;
+}
+
+.project-card {
+  flex: 0 0 300px;
+  min-height: 340px;
+  background: #111;
+  border: 2px solid #00ffff;
+  border-radius: 10px;
+  padding: 20px;
+  color: white;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.project-card:hover {
+  transform: scale(1.03);
+}
+
+.project-hover-image {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: 0.4s ease;
+}
+
+.project-hover-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.project-card:hover .project-hover-image {
+  opacity: 1;
+}
+
+.project-content {
+  position: relative;
+  z-index: 2;
+}
+
+.info-btn {
+  margin-top: 10px;
+  background-color: transparent;
+  color: #00ffff;
+  border: 1px solid #00ffff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.more-info {
+  display: none;
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: #ccc;
+}
+
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 2rem;
+  background: rgba(0, 255, 255, 0.2);
+  color: #00ffff;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.arrow.left {
+  left: 0;
+}
+
+.arrow.right {
+  right: 0;
+}
+
+/* Skills */
+#skills {
+  background: #0f0f0f;
+}
+
+.skills-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.skills-left,
+.skills-right {
+  flex: 1;
+}
+
+.vertical-skill-list {
+  list-style: none;
+}
+
+.vertical-skill-list li {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.vertical-skill-list span {
+  width: 100px;
+  display: inline-block;
+  text-align: right;
+}
+
+.bar {
+  flex-grow: 1;
+  height: 12px;
+  background: #333;
+  border-radius: 6px;
+  position: relative;
+  overflow: hidden;
+}
+
+.bar::after {
+  content: "";
+  position: absolute;
+  height: 100%;
+  left: 0;
+  top: 0;
+  animation: fillBar 2s ease forwards;
+}
+
+.bar.excellent::after {
+  width: 95%;
+  background: #00ff99;
+}
+
+.bar.good::after {
+  width: 75%;
+  background: #00ffff;
+}
+
+.bar.average::after {
+  width: 55%;
+  background: #ffaa00;
+}
+
+@keyframes fillBar {
+  from { width: 0; }
+}
+
+.chart-half {
+  height: 300px;
+  margin-bottom: 20px;
+}
+
+/* Certifications */
+#certifications {
+  background: #0a0a0a;
+  text-align: center;
+}
+
+.cert-slider {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  padding: 20px 0;
+}
+
+.cert-card {
+  flex: 0 0 300px;
+  background: #1c1c1c;
+  border: 1px solid #00ffff;
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+.cert-card img {
+  width: 100%;
+  height: 250px;
+  object-fit: contain;
+  background: #000;
+}
+
+/* Contact */
+#contact {
+  text-align: center;
+}
+
+.contact-container {
+  display: flex;
+  gap: 3rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.contact-form {
+  flex: 1;
+  min-width: 300px;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.contact-form input,
+.contact-form textarea {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #00ffff;
+  background: #1c1c1c;
+  color: #fff;
+}
+
+.contact-form button {
+  background: #00ffff;
+  color: #000;
+  border: none;
+  padding: 10px;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.contact-info {
+  flex: 1;
+  min-width: 300px;
+}
+
+.social-icons {
+  display: flex;
+  gap: 1.2rem;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+footer {
+  text-align: center;
+  padding: 2rem;
+  background: #111;
+  color: #aaa;
+}
+
+@media (max-width: 768px) {
+
+  .nav-links {
+    display: none;
+  }
+
+  .skills-container {
+    flex-direction: column;
+  }
+
+  .project-card,
+  .cert-card {
+    flex: 0 0 90%;
+  }
+
+}
+
+  </style>
 </head>
+
 <body>
 
-  <!-- Navbar -->
-  <header>
-    <nav class="navbar">
-      <h1>Nigmanshu</h1>
-      <ul class="nav-links">
-        <li><a href="#home">Home</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="#certifications">Certifications</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </nav>
-  </header>
+<header>
+  <nav class="navbar">
+    <h1>Nigmanshu</h1>
 
-  <!-- Hero Section -->
-<!-- Hero Section -->
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#certifications">Certifications</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- Hero -->
 <section class="hero" id="home">
+
   <video autoplay loop muted playsinline class="bg-video">
     <source src="3129576-uhd_3840_2160_30fps.mp4" type="video/mp4">
-    Your browser does not support the video tag.
   </video>
+
   <div class="content">
-     <img src="Saurabh cu.png" alt="Nigmanshu Jha" class="profile-img" />
+
+    <img src="Saurabh cu.png" alt="Nigmanshu Jha" class="profile-img" />
+
     <h1>Hi, I'm <span>Nigmanshu Jha</span></h1>
+
     <h2><span id="typing"></span></h2>
-    <a href="nigmanshu-22bcc70073.pdf" class="btn" target="_blank">View Resume</a>
+
+    <a href="nigmanshu-22bcc70073.pdf" class="btn" target="_blank">
+      View Resume
+    </a>
 
   </div>
+
 </section>
 
-
- <!-- About Me Section -->
+<!-- About -->
 <section id="about">
+
   <h2 class="section-heading">About Me</h2>
-  
+
   <div class="about-card">
+
     <p>
-      I'm an enthusiastic <strong>Computer Science Engineering</strong> student at Chandigarh University (2022–2026), passionate about building impactful web apps, exploring AI, and solving real-world problems. I thrive on innovation, teamwork, and lifelong learning.
+      I'm an enthusiastic <strong>Computer Science Engineering</strong>
+      student at Chandigarh University (2022–2026), passionate about
+      building impactful web apps, exploring AI, and solving real-world
+      problems.
     </p>
-    
+
     <div class="contact-icons">
-      <div><img src="https://img.icons8.com/ios-filled/50/00ffff/phone.png"/><span>7011913402</span></div>
-      <div><img src="https://img.icons8.com/ios-filled/50/00ffff/gmail.png"/><span>jhanigmanshu2610@gmail.com</span></div>
-      <div><img src="https://img.icons8.com/ios-filled/50/00ffff/linkedin.png"/><a href="https://www.linkedin.com/in/nigmanshu-jha" target="_blank">linkedin.com/in/nigmanshu-jha</a></div>
+
+      <div>
+        <img src="https://img.icons8.com/ios-filled/50/00ffff/phone.png"/>
+        <span>7011913402</span>
+      </div>
+
+      <div>
+        <img src="https://img.icons8.com/ios-filled/50/00ffff/gmail.png"/>
+        <span>jhanigmanshu2610@gmail.com</span>
+      </div>
+
+      <div>
+        <img src="https://img.icons8.com/ios-filled/50/00ffff/linkedin.png"/>
+        <a href="https://www.linkedin.com/in/nigmanshu-jha" target="_blank">
+          linkedin.com/in/nigmanshu-jha
+        </a>
+      </div>
+
     </div>
+
   </div>
+
 </section>
 
+<!-- Projects -->
+<section id="projects">
 
-<section id="projects" class="full-screen-section">
   <h2 class="section-heading">Projects</h2>
 
-  <!-- Filter Buttons -->
   <div class="project-filters">
     <button class="filter-btn active" data-category="all">All</button>
-    <button class="filter-btn" data-category="web">Web Development</button>
-    <button class="filter-btn" data-category="aws">AWS</button>
+    <button class="filter-btn" data-category="web">Web</button>
     <button class="filter-btn" data-category="ai">AI</button>
   </div>
 
   <div class="project-slider-wrapper">
-    <button class="arrow left" onclick="scrollProjects('left')">&#10094;</button>
+
+    <button class="arrow left" onclick="scrollProjects('left')">
+      &#10094;
+    </button>
 
     <div class="project-slider" id="project-slider">
-      
-      <!-- Project 1 -->
-      <div class="project-card" data-category="ai" onclick="window.open('https://github.com/your-repo-1', '_blank')">
+
+      <div class="project-card" data-category="ai">
+
         <div class="project-hover-image">
-          <img src="healtcare.jpeg" alt="Smart Health Care Screenshot">
+          <img src="healtcare.jpeg">
         </div>
+
         <div class="project-content">
           <h3>Smart Health Care</h3>
           <p>AI-powered chatbot for healthcare FAQs.</p>
           <p><strong>Tech:</strong> HTML, CSS, JS, NLP</p>
         </div>
+
       </div>
 
-      <!-- Project 2 -->
       <div class="project-card" data-category="ai">
+
         <div class="project-hover-image">
-          <img src="Implementation-of-pre-trained-Automatic-Speech-Recognition-model-1.jpg" alt="ASR Model Screenshot">
+          <img src="Implementation-of-pre-trained-Automatic-Speech-Recognition-model-1.jpg">
         </div>
+
         <div class="project-content">
           <h3>ASR Model (IITB)</h3>
           <p>Speech recognition model for Indian languages.</p>
-          <p><strong>Tech:</strong> ML, ASR, Python</p>
-          <button class="info-btn" onclick="toggleInfo(event)">More Info</button>
-          <div class="more-info">Built using Transformers, ASR for Indic languages.</div>
+
+          <button class="info-btn" onclick="toggleInfo(event)">
+            More Info
+          </button>
+
+          <div class="more-info">
+            Built using Transformers and ML models.
+          </div>
+
         </div>
+
       </div>
 
-      <!-- Project 3 -->
-      <div class="project-card" data-category="web" onclick="window.open('https://github.com/your-repo-2', '_blank')">
+      <div class="project-card" data-category="web">
+
         <div class="project-hover-image">
-          <img src="overview1.png" alt="Weather Monitor Screenshot">
+          <img src="overview1.png">
         </div>
+
         <div class="project-content">
           <h3>Weather Monitor</h3>
-          <p>Real-time data analysis for weather forecasting.</p>
-          <p><strong>Tech:</strong> JS, Sensors, Data</p>
+          <p>Real-time weather data analysis system.</p>
         </div>
-      </div>
 
-      <!-- Project 4 -->
-      <div class="project-card" data-category="ai">
-        <div class="project-hover-image">
-          <img src="download.jpeg" alt="Smart Home Assistant Screenshot">
-        </div>
-        <div class="project-content">
-          <h3>Smart Home Assistant</h3>
-          <p>Voice-controlled smart home UI.</p>
-          <p><strong>Tech:</strong> Python, Speech Recognition</p>
-          <button class="info-btn" onclick="toggleInfo(event)">More Info</button>
-          <div class="more-info">Hands-free device interaction using Python.</div>
-        </div>
-      </div>
-
-      <!-- Future Project -->
-      <div class="project-card future-card" data-category="web">
-        <div class="project-hover-image">
-          <img src="images/future.jpg" alt="Coming Soon">
-        </div>
-        <div class="project-content">
-          <h3>Future Projects</h3>
-          <p>Coming Soon 🚀</p>
-        </div>
       </div>
 
     </div>
 
-    <button class="arrow right" onclick="scrollProjects('right')">&#10095;</button>
+    <button class="arrow right" onclick="scrollProjects('right')">
+      &#10095;
+    </button>
+
   </div>
+
 </section>
 
-
-
+<!-- Skills -->
 <section id="skills">
+
   <h2 class="section-heading">Skills</h2>
 
   <div class="skills-container">
-    <!-- Left Skill Bars -->
+
     <div class="skills-left">
+
       <ul class="vertical-skill-list">
+
         <li><span>HTML5</span><div class="bar good"></div></li>
         <li><span>CSS3</span><div class="bar good"></div></li>
         <li><span>JavaScript</span><div class="bar good"></div></li>
         <li><span>Python</span><div class="bar excellent"></div></li>
         <li><span>C/C++</span><div class="bar average"></div></li>
-        <li><span>SQL</span><div class="bar average"></div></li>
-        <li><span>Git & GitHub</span><div class="bar good"></div></li>
+
       </ul>
+
     </div>
 
-    <!-- Right Side Charts (Fixed 50/50) -->
     <div class="skills-right">
+
       <div class="chart-half">
         <canvas id="skillPieChart"></canvas>
       </div>
+
       <div class="chart-half">
         <canvas id="skillBarChart"></canvas>
       </div>
+
     </div>
+
   </div>
+
 </section>
 
-<!-- Certifications Section -->
+<!-- Certifications -->
 <section id="certifications">
+
   <h2 class="section-heading">Certifications</h2>
 
-  <div class="cert-slider-wrapper">
-    <button class="arrow left" onclick="scrollCerts('left')">&#10094;</button>
+  <div class="cert-slider">
 
-    <div class="cert-slider" id="cert-slider">
-      <!-- Certification Cards -->
-      <div class="cert-card">
-        <h3>IBM Design Thinking</h3>
-        <img src="certificates/ibm-design-thinking.png" alt="IBM Design Thinking">
-      </div>
-
-      <div class="cert-card">
-        <h3>Cloud Infra & Gen AI – Oracle</h3>
-        <img src="certificates/oracle-genai.png" alt="Oracle Gen AI">
-      </div>
-
-      <div class="cert-card">
-        <h3>AWS Academy Cloud Architect</h3>
-        <img src="certificates/aws-architect.png" alt="AWS Cloud Architect">
-      </div>
-
-      <div class="cert-card">
-        <h3>Google Cloud AI Certification</h3>
-        <img src="certificates/google-cloud-ai.png" alt="Google Cloud AI">
-      </div>
-
-      <div class="cert-card">
-        <h3>Full Stack Dev – Infosys</h3>
-        <img src="certificates/infosys-fullstack.png" alt="Infosys Full Stack">
-      </div>
-
-      <div class="cert-card">
-        <h3>SQL for Data Science – IBM</h3>
-        <img src="certificates/ibm-sql.png" alt="IBM SQL for Data Science">
-      </div>
-
-      <div class="cert-card future-card">
-        <h3>More Coming Soon 🚀</h3>
-        <img src="certificates/coming-soon.png" alt="Coming Soon">
-      </div>
+    <div class="cert-card">
+      <h3>IBM Design Thinking</h3>
+      <img src="certificates/ibm-design-thinking.png">
     </div>
 
-    <button class="arrow right" onclick="scrollCerts('right')">&#10095;</button>
+    <div class="cert-card">
+      <h3>AWS Cloud Architect</h3>
+      <img src="certificates/aws-architect.png">
+    </div>
+
+    <div class="cert-card">
+      <h3>Google Cloud AI</h3>
+      <img src="certificates/google-cloud-ai.png">
+    </div>
+
   </div>
+
 </section>
 
-
-
-<!-- Contact Me Section -->
+<!-- Contact -->
 <section id="contact">
+
   <h2 class="section-heading">Contact Me</h2>
 
   <div class="contact-container">
-    <!-- Contact Form -->
-    <form class="contact-form" onsubmit="event.preventDefault(); alert('Message Sent! (Functionality not active in static version)');">
+
+    <form class="contact-form"
+      onsubmit="event.preventDefault(); alert('Message Sent!');">
+
       <input type="text" placeholder="Your Name" required />
       <input type="email" placeholder="Your Email" required />
-      <textarea rows="5" placeholder="Your Message" required></textarea>
+
+      <textarea rows="5"
+        placeholder="Your Message"
+        required></textarea>
+
       <button type="submit">Send Message</button>
+
     </form>
 
-    <!-- Contact Info -->
     <div class="contact-info">
+
       <p><strong>Email:</strong> jhanigmanshu2610@gmail.com</p>
-        <p><strong>Phone:</strong>+91 7011913402</p>
-        <p><strong>Address:</strong> B-78 Sangam Park Khoda colony, Ghaziabad Uttar Pradesh, India</p>
+
+      <p><strong>Phone:</strong> +91 7011913402</p>
 
       <div class="social-icons">
-        <a href="https://www.facebook.com/" target="_blank">
-          <img src="https://img.icons8.com/ios-filled/40/00ffff/facebook--v1.png" alt="Facebook"/>
-        </a>
-        <a href="https://www.instagram.com/" target="_blank">
-          <img src="https://img.icons8.com/ios-filled/40/00ffff/instagram-new.png" alt="Instagram"/>
-        </a>
+
         <a href="https://www.linkedin.com/in/nigmanshu-jha" target="_blank">
-          <img src="https://img.icons8.com/ios-filled/40/00ffff/linkedin.png" alt="LinkedIn"/>
+          <img src="https://img.icons8.com/ios-filled/40/00ffff/linkedin.png"/>
         </a>
+
         <a href="https://github.com/" target="_blank">
-          <img src="https://img.icons8.com/ios-filled/40/00ffff/github.png" alt="GitHub"/>
+          <img src="https://img.icons8.com/ios-filled/40/00ffff/github.png"/>
         </a>
+
       </div>
+
     </div>
+
   </div>
+
 </section>
 
+<footer>
+  <p>© 2025 Nigmanshu Jha | Portfolio</p>
+</footer>
 
-  <footer>
-    <p>© 2025 Nigmanshu Jha | CSE Portfolio</p>
-  </footer>
+<script>
 
-  <script src="script.js"></script>
+const phrases = [
+  "a CSE Student",
+  "a Web Developer",
+  "learning AI & Cloud",
+  "solving DSA"
+];
+
+let i = 0;
+let j = 0;
+let currentPhrase = [];
+let isDeleting = false;
+
+function loop() {
+
+  const display = document.getElementById("typing");
+
+  display.innerHTML = currentPhrase.join('');
+
+  if (i < phrases.length) {
+
+    if (!isDeleting && j <= phrases[i].length) {
+      currentPhrase.push(phrases[i][j]);
+      j++;
+    }
+
+    if (isDeleting && j >= 0) {
+      currentPhrase.pop();
+      j--;
+    }
+
+    if (j === phrases[i].length) {
+      isDeleting = true;
+      setTimeout(loop, 1000);
+      return;
+    }
+
+    if (isDeleting && j === 0) {
+      currentPhrase = [];
+      isDeleting = false;
+      i = (i + 1) % phrases.length;
+    }
+
+  }
+
+  setTimeout(loop, isDeleting ? 50 : 100);
+}
+
+loop();
+
+/* Scroll Projects */
+function scrollProjects(direction) {
+
+  const slider = document.getElementById("project-slider");
+
+  const scrollAmount = slider.clientWidth;
+
+  slider.scrollBy({
+    left: direction === 'left'
+      ? -scrollAmount
+      : scrollAmount,
+    behavior: 'smooth'
+  });
+}
+
+/* Toggle Info */
+function toggleInfo(event) {
+
+  event.stopPropagation();
+
+  const infoBox = event.target.nextElementSibling;
+
+  infoBox.style.display =
+    infoBox.style.display === 'block'
+      ? 'none'
+      : 'block';
+}
+
+/* Filter Projects */
+document.addEventListener("DOMContentLoaded", () => {
+
+  const filterButtons =
+    document.querySelectorAll(".filter-btn");
+
+  const projectCards =
+    document.querySelectorAll(".project-card");
+
+  filterButtons.forEach(button => {
+
+    button.addEventListener("click", () => {
+
+      document.querySelector(".filter-btn.active")
+        ?.classList.remove("active");
+
+      button.classList.add("active");
+
+      const category = button.dataset.category;
+
+      projectCards.forEach(card => {
+
+        const match =
+          card.dataset.category === category
+          || category === "all";
+
+        card.style.display =
+          match ? 'block' : 'none';
+
+      });
+
+    });
+
+  });
+
+});
+
+/* Pie Chart */
+const pieCtx =
+  document.getElementById('skillPieChart');
+
+new Chart(pieCtx, {
+
+  type: 'pie',
+
+  data: {
+
+    labels: [
+      'HTML5',
+      'CSS3',
+      'JavaScript',
+      'Python',
+      'C/C++'
+    ],
+
+    datasets: [{
+
+      data: [80, 75, 70, 90, 60],
+
+      backgroundColor: [
+        '#00ffff',
+        '#00ffaa',
+        '#ffaa00',
+        '#00ff99',
+        '#ff00aa'
+      ]
+
+    }]
+
+  }
+
+});
+
+/* Bar Chart */
+const barCtx =
+  document.getElementById('skillBarChart');
+
+new Chart(barCtx, {
+
+  type: 'bar',
+
+  data: {
+
+    labels: [
+      'HTML5',
+      'CSS3',
+      'JavaScript',
+      'Python',
+      'C/C++'
+    ],
+
+    datasets: [{
+
+      label: 'Proficiency %',
+
+      data: [80, 75, 70, 90, 60],
+
+      backgroundColor: '#00ffff'
+
+    }]
+
+  },
+
+  options: {
+
+    scales: {
+
+      y: {
+
+        beginAtZero: true,
+        max: 100
+
+      }
+
+    }
+
+  }
+
+});
+
+</script>
+
 </body>
 </html>
